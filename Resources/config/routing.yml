@@ -1,0 +1,3 @@
+kaikmediaeventsmodule:
+    resource: "@KaikmediaEventsModule/Controller"
+    type:     annotation

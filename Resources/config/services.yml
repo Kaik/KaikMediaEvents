@@ -1,0 +1,35 @@
+services:
+    kaikmedia_events_module.link_container:
+        class: Kaikmedia\EventsModule\Container\LinkContainer
+        arguments:
+          - "@translator.default"
+          - "@router"
+          - "@kaikmedia_events_module.access_manager"
+          - "@=service('zikula_extensions_module.api.variable').get('KaikmediaEventsModule', 'enablecategorization', true)"
+        tags:
+          - { name: zikula.link_container }
+
+    kaikmedia_events_module.access_manager:
+        class: Kaikmedia\EventsModule\Security\AccessManager
+        arguments: 
+          - "@request_stack"
+          - "@translator.default"
+          - "@zikula_permissions_module.api.permission"
+
+    kaikmedia_events_module.import_helper:
+        class: Kaikmedia\EventsModule\Helper\ImportHelper
+        arguments:
+          - "@request_stack"
+          - "@doctrine.orm.default_entity_manager"
+          - "@zikula_extensions_module.api.variable"
+
+    kaikmedia_events_module.helper.search_helper:
+        class: Kaikmedia\EventsModule\Helper\SearchHelper
+        arguments:
+          - '@doctrine.orm.entity_manager'
+          - '@zikula_categories_module.api.category_permission'
+          - '@session'
+          - "@=service('zikula_extensions_module.api.variable').get('KaikmediaEventsModule', 'enablecategorization', true)"
+          - "@kaikmedia_events_module.access_manager"
+        tags:
+          - { name: zikula.searchable_module, bundleName: KaikmediaEventsModule}

@@ -1,0 +1,132 @@
+{% extends 'KaikmediaEventsModule:Base:user.html.twig' %}
+{% block header %}
+    {% set settings='settings' %}
+    {{ parent() }}
+{% endblock %}
+{% block title %}
+    {% set title_icon="<i class='fa fa-info'></i>" %}
+    {% set title=event.title %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    {% if hasPermission('KaikmediaEventsModule:manager:modify', '::', 'ACCESS_EDIT') %}
+        <div class="col-md-2 pull-right text-right">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="options-menu" data-toggle="dropdown" aria-expanded="true">
+                    {{ __('Options')}}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="options-menu">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('kaikmediaeventsmodule_manager_modify', {'id': event.id}) }}">{{ __('Edit')}}</a></li>
+{#                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{ __('Depot')}}</a></li>#}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+    {{ event.content|raw }}
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+{#{ include('ZikulaIntercomModule:Base:modal.html.twig') }#}
+{#{ eventAddAsset('javascript', zasset('@ZikulaIntercomModule:js/Zikula.Intercom.inbox.manager.js')) }}
+<script>
+(function($) {
+        $(function(){
+            Zikula.Intercom.InboxManager.init();
+        });
+})(jQuery);
+</script>
+{#{ dump() }#}
+{#<h3>
+    <span class="fa fa-list"></span>
+    {{ __('Manager')}}
+</h3>
+<div class="container-fluid">
+    <div class="row">
+        <div class="list-group col-md-12">
+            <div class="list-group-item col-md-12"   style="background: #FFF6DF;">
+                <h1> {{ event.title }} </h1>
+                <p><small>{{ __('url')}}</small> {{ event.urltitle }}</p>
+            </div>
+            <div class="list-group-item col-md-12 clearfix" style="background:#eee;">
+                <div class="col-md-3">{{ __('Views')}}: {{ event.views }}</div>
+                <div class="col-xs-3 col-md-1">
+                    {% include "KaikmediaEventsModule:Common:online.menu.html.twig" with {'id': event.id, 'selected': event.online} %}
+                </div>
+                <div class="col-xs-3 col-md-1">
+                    {% include "KaikmediaEventsModule:Common:depot.menu.html.twig" with {'id': event.id, 'selected': event.depot} %}
+                </div>
+                <div class="col-xs-3 col-md-1">
+                    {% include "KaikmediaEventsModule:Common:inlist.menu.html.twig" with {'id': event.id, 'selected': event.inlist} %}
+                </div>
+                <div class="col-xs-3 col-md-1">
+                    {% include "KaikmediaEventsModule:Common:inmenu.menu.html.twig" with {'id': event.id, 'selected': event.inmenu} %}
+                </div>
+                <div class="col-xs-3 col-md-1">
+                    {% include "KaikmediaEventsModule:Common:layout.menu.html.twig" with {'id': event.id, 'selected': event.layout} %}
+                </div>
+                <div class="col-xs-3 col-md-1">
+                    {% include "KaikmediaEventsModule:Common:language.menu.html.twig" with {'id': event.id, 'selected': event.language} %}
+                </div>
+                <div class="col-md-2 pull-right text-right">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="options-menu" data-toggle="dropdown" aria-expanded="true">
+                            {{ __('Options')}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="options-menu">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('kaikmediaeventsmodule_manager_modify', {'id': event.id}) }}">{{ __('Edit')}}</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{ __('Depot')}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item col-md-12 clearfix" >
+                
+            </div>
+        </div>
+    </div>
+</div>#}
+
+
+
+{#{% include 'KaikmediaEventsModule:Common:resources.html.twig'  %}
+<div class="panel">
+    <div class="panel-body km-podstrona">
+        <div > 
+            <div class="title col-md-9" > 
+                <h1>{{ event.title }}
+                </h1>	
+            </div>
+            <div class="menu col-md-2 pull-right text-right" > 
+
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                        {{ __('Options')}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('kaikmediaeventsmodule_admin_modify', {'id': event.id}) }}">{{ __('Edit')}}</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{ __('Depot')}}</a></li>
+                    </ul>
+                </div>
+
+            </div>     	
+        </div>
+        <div>     	        
+            <div class="col-md-12" > 
+                {{ notifyDisplayHooks('kaikmediaevents.ui_hooks.event.display_view', event.id) }}	        
+                {{ event.content|raw }}      
+            </div>	              
+        </div>
+        <div class="col-md-12 text-center services-bottom">
+            <h2>{% trans from "kaikmediakmtheme" %}Want to contact us?{% endtrans %}
+                <a class="btn btn-primary btn-info btn-cta" href="{{  path('kaikmediakmdmodule_messages_contact') }}">
+                    {% trans from "kaikmediakmtheme" %}Why not by sending a message?{% endtrans %}
+                </a>
+            </h2>
+        </div>	
+    </div>
+</div>#}

@@ -1,0 +1,36 @@
+{% extends 'KaikmediaEventsModule:Base:admin.html.twig' %}
+{% block header %}
+    {% set settings='settings' %}
+    {{ parent() }}
+{% endblock %} 
+{% block title %}
+    {% set title_icon="<i class='fa fa-user-secret'></i>" %}
+    {% set title=__('Events config') %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+<div id="km_events_admin_index" class="col-md-12 clearfix">
+    <div class="container-fluid">
+        <div class="row">
+        {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <fieldset>
+            <legend>{{ __('Listing settings') }}</legend>
+            <div class="col-md-3">
+                {{ form_label(form.itemsperpage, __('Items per page'), { 'label_attr': {'class': ''} }) }}
+                {{ form_widget(form.itemsperpage, {'attr': {'class': '' }}) }}
+                {{ form_errors(form.itemsperpage) }}
+            </div>
+        </fieldset>
+        <div class="col-md-12 text-center" style="margin-top:20px;">
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-success'}}) }}
+        </div>
+        {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+{% endblock %}

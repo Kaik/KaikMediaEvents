@@ -1,0 +1,29 @@
+<div id="km_events">
+    {% block header %}
+        {#{ eventAddAsset('stylesheet', zasset('@KaikmediaKmdModule:css/style.css')) }#}
+        {#{ eventAddAsset('javascript', zasset('@KaikmediaEventsModule:js/Kaikmedia.Kmd.Home.js')) }
+        <script>
+        (function($) {
+                $(function(){
+                    //Zikula.Intercom.settings.set({{ settings|json_encode|raw }});  
+                });
+        })(jQuery);
+        </script>
+        #}
+    {% endblock %}
+    <section class="content-header">
+        {% block title %}
+            <h1>
+                {{ title_icon|raw }} {{ title }}
+                {{ pageSetVar('title', title) }}
+            </h1>
+        {% endblock %} 
+    </section> 
+    <div id="km_events_content">
+        {% block content %}       
+        {% endblock %}
+    </div>
+
+    {% block footer %}
+    {% endblock %}
+</div>

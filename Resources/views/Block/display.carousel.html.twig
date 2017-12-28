@@ -1,0 +1,32 @@
+<div id="carousel_home" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    {% for event in events %}     
+    <li data-target="#carousel_home" data-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %} class="active" {% endif %} ></li>    
+    {% endfor %} 
+  </ol>
+    <div id="blured_box" class="blur">
+    
+    </div>  
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox" ">
+    {% for event in events %}       
+    <div class="item {% if loop.index0 == 0 %} active {% endif %}">      
+    {% if event.getPromotedImage() != null %}
+    <a href="{{ path('kaikmediaeventsmodule_user_display', {'urltitle': event.urltitle}) }}">
+     <img class="logo-carousel" src="{{ app.request.scheme ~ '://' ~ app.request.host ~ '/web/uploads/documents/' ~ event.getPromotedImage().getPath()}}" />
+    </a>  
+     {% endif %}
+      <div class="carousel-caption">
+       <a href="{{ path('kaikmediaeventsmodule_user_display', {'urltitle': event.urltitle}) }}"> <h2 class="text-left"> {{ event.title }} </h2> </a>
+        <p class="text-left">
+        {{ event.description }}
+        </p>
+      </div>
+    </div>  
+    
+    
+    {% endfor %}    
+  </div>
+  
+</div>

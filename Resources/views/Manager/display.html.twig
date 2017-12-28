@@ -1,0 +1,81 @@
+{% extends 'KaikmediaEventsModule:Base:admin.html.twig' %}
+{% block header %}
+    {% set settings='settings' %}
+    {{ parent() }}
+{% endblock %} 
+{% block title %}
+    {% set title_icon="<i class='fa fa-user-secret'></i>" %}
+    {% set title=__('Events') %}
+{#    {{ parent() }}#}
+{% endblock %}
+{% block content %}
+    <div class="container-fluid"> 
+        <div class="row">   
+            <div class="list-group col-md-12">
+                <div class="list-group-item col-md-12"   style="background: #FFF6DF;">
+                    <h1> {{ event.title }} </h1>
+                    <p><small>{{ __('url')}}</small> {{ event.urltitle }}</p>
+                </div>
+                <div class="list-group-item col-md-12 clearfix" style="background:#eee;">
+                    <div class="col-md-3">{{ __('Views')}}: {{ event.views }}</div>                   
+                    <div class="col-xs-3 col-md-1">		
+                        {% include "KaikmediaEventsModule:Common:online.menu.html.twig" with {'id': event.id, 'selected': event.online} %}
+                    </div>	
+                    <div class="col-xs-3 col-md-1">			            
+                        {% include "KaikmediaEventsModule:Common:depot.menu.html.twig" with {'id': event.id, 'selected': event.depot} %}	
+                    </div>	
+                    <div class="col-xs-3 col-md-1">		
+                        {% include "KaikmediaEventsModule:Common:inlist.menu.html.twig" with {'id': event.id, 'selected': event.inlist} %}
+                    </div>	
+                    <div class="col-xs-3 col-md-1">			            
+                        {% include "KaikmediaEventsModule:Common:inmenu.menu.html.twig" with {'id': event.id, 'selected': event.inmenu} %}	
+                    </div>            
+                    <div class="col-xs-3 col-md-1">
+                        {% include "KaikmediaEventsModule:Common:layout.menu.html.twig" with {'id': event.id, 'selected': event.layout} %}	
+                    </div>
+                    <div class="col-xs-3 col-md-1">
+                        {% include "KaikmediaEventsModule:Common:language.menu.html.twig" with {'id': event.id, 'selected': event.language} %}	
+                    </div>
+                    {% if event.categoryAssignments is not null %}
+                    <div class="col-xs-3 col-md-1">
+                        {% for assignment in event.categoryAssignments %}
+                            {{ assignment.category.display_name[app.request.getLocale()] }}{% if not loop.last %}, {% endif %}
+                        {% else %}
+                            {{  __('No category') }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <div class="col-md-2 pull-right text-right">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="options-menu" data-toggle="dropdown" aria-expanded="true">
+                                {{ __('Options')}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="options-menu">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('kaikmediaeventsmodule_manager_modify', {'id': event.id}) }}">{{ __('Edit')}}</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{ __('Depot')}}</a></li>
+                            </ul>
+                        </div>
+                    </div>     
+                </div>                         
+                <div class="list-group-item col-md-12 clearfix" >
+                    {{ event.content|raw }}               
+                </div>           
+            </div>  
+        </div>   
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+    {#{ include('ZikulaIntercomModule:Base:modal.html.twig') }
+    { eventAddAsset('javascript', zasset('@ZikulaIntercomModule:js/Zikula.Intercom.inbox.manager.js')) }}
+    <script>
+    (function($) {
+            $(function(){
+                Zikula.Intercom.InboxManager.init();  
+            });
+    })(jQuery);
+    </script>#}
+{#    {{ dump(event) }}#}
+{% endblock %}

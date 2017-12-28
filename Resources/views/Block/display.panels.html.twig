@@ -1,0 +1,19 @@
+{% for event in events %}  
+<div class="col-md-4">
+<div class="panel">
+  <div class="panel-body">
+     {% if event.getIconImage() != null %}
+    <a href="{{ path('kaikmediaeventsmodule_user_display', {'urltitle': event.urltitle}) }}">
+     <img src="{{ app.request.scheme ~ '://' ~ app.request.host ~ '/web/uploads/documents/' ~ event.getIconImage().getPath()}}" class="center-block" />
+    </a>  
+     {% endif %}
+      <div class="">
+        <a href="{{ path('kaikmediaeventsmodule_user_display', {'urltitle': event.urltitle}) }}"> <h2 class="text-center"> {{ event.title }} </h2> </a>
+        <p class="text-left">
+        {{ event.description }}
+        </p>
+      </div>
+  </div>
+</div>
+</div>    
+{% endfor %}

@@ -1,0 +1,40 @@
+{
+	"name" : "kaikmedia/events-module",
+	"version" : "1.0.0",        
+	"description" : "Module to manage simple events",
+	"type" : "zikula-module",
+	"license" : "LGPL-3.0+",
+	"authors" : [{
+			"name" : "Kaik",
+			"homepage" : "http://kaikmedia.com/",
+			"email" : "contact@kaikmedia.com"
+		}
+	],
+	"autoload" : {
+		"psr-4" : {
+			"Kaikmedia\\EventsModule\\" : ""
+		}
+	},
+	"require" : {
+		"php" : ">5.3.3"
+	},
+	"extra" : {
+		"zikula" : {
+			"core-compatibility" : ">=1.5.0",                   
+			"class" : "Kaikmedia\\EventsModule\\KaikmediaEventsModule",
+			"displayname" : "Events",
+			"url" : "events",
+			"oldnames" : [
+				"Events"
+			],
+			"capabilities" : {
+                                "categorizable": {"entities": ["Kaikmedia\\EventsModule\\Entity\\EventEntity"]},                          
+				"user" : { "route" : "kaikmediaeventsmodule_event_view"},
+				"admin" : {"route" : "kaikmediaeventsmodule_manager_list"}
+			},
+			"securityschema" : {
+				"KaikmediaEventsModule::" : "::"
+			}                       
+		}
+	}
+}

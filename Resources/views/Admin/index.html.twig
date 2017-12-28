@@ -1,0 +1,30 @@
+{# default admin/manager template #}
+{% extends 'KaikmediaEventsModule:Base:admin.html.twig' %}
+{% block header %}
+    {% set settings='settings' %}
+    {{ parent() }}
+    {#{ eventAddAsset('stylesheet', zasset('@ZikulaIntercomModule:css/inbox.css')) }#}
+{% endblock %} 
+{% block title %}
+    {% set title_icon="<i class='fa fa-user-secret'></i>" %}
+    {% set title=__('Events') %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    <div id="km_events_admin_index" class="col-md-12 clearfix">    
+  
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+    {#{ include('ZikulaIntercomModule:Base:modal.html.twig') }#}
+    {#{ eventAddAsset('javascript', zasset('@ZikulaIntercomModule:js/Zikula.Intercom.inbox.manager.js')) }}
+    <script>
+    (function($) {
+            $(function(){
+                Zikula.Intercom.InboxManager.init();  
+            });
+    })(jQuery);
+    </script>
+    {#{ dump() }#}
+{% endblock %}
