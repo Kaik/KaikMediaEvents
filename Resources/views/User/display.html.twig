@@ -9,6 +9,17 @@
     {{ parent() }}
 {% endblock %}
 {% block content %}
+
+    {% set hooks=notifyDisplayHooks('events.ui_hooks.event.display_view', page.id, NULL, TRUE)  %}
+    {% set gallery=(attribute(hooks, 'provider.gallery.ui_hooks.media') is defined ? attribute(hooks, 'provider.gallery.ui_hooks.media').__toString() : {}) %}
+    {% for feature in gallery %}
+        {% if feature.relation.media is defined and feature.relation.media.mediaExtra.fileName is defined and feature.relation.media.mediaExtra.fileName is not empty %}
+            <img src="{{ ('/uploads/' ~ (feature.relation.media.mediaExtra.subdir is defined ? feature.relation.media.mediaExtra.subdir ~ '/' : '') ~ feature.relation.media.mediaExtra.fileName)|imagine_filter('dynamic', {"thumbnail": {"size": [700, 300] }}) }}" />
+        {% endif %}
+    {% endfor %}
+
+
+
     {% if hasPermission('KaikmediaEventsModule:manager:modify', '::', 'ACCESS_EDIT') %}
         <div class="col-md-2 pull-right text-right">
             <div class="dropdown">
@@ -23,7 +34,12 @@
             </div>
         </div>
     {% endif %}
+
+
     {{ event.content|raw }}
+
+
+
 {% endblock %}
 {% block footer %}
     {{ parent() }}
@@ -89,8 +105,6 @@
         </div>
     </div>
 </div>#}
-
-
 
 {#{% include 'KaikmediaEventsModule:Common:resources.html.twig'  %}
 <div class="panel">
